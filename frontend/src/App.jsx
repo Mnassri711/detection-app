@@ -26,10 +26,11 @@ function App() {
     formData.append("image", image);
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/predict", {
-        method: "POST",
-        body: formData,
-      });
+      const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000/api/predict";
+const res = await fetch(API_URL, {
+  method: "POST",
+  body: formData,
+});
       if (!res.ok) throw new Error("Erreur du serveur");
       const data = await res.json();
       setResult(data.detections);
