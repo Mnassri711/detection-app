@@ -10,7 +10,7 @@ app.use(cors());
 // stocke le fichier uploadé en mémoire, pas sur le disque
 const upload = multer({ storage: multer.memoryStorage() });
 
-const PYTHON_SERVICE_URL = "http://127.0.0.1:8000/predict";
+const PYTHON_SERVICE_URL = process.env.PYTHON_SERVICE_URL || "http://127.0.0.1:8000/predict";
 
 app.get("/", (req, res) => {
   res.json({ status: "Backend actif" });
@@ -37,5 +37,5 @@ app.post("/api/predict", upload.single("image"), async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Backend lancé sur http://127.0.0.1:${PORT}`));
